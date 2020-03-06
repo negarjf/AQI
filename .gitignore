@@ -1,3 +1,7 @@
 node_modules
 .env
 .vscode/
+results/*
+
+# exception to the rule
+!results/.gitkeep 
