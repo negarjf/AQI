@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const axios = require('axios');
+const moment = require('moment');
 const JDate = require('jalali-date');
 
 const DATE_RANGE = [
@@ -42,14 +43,11 @@ const getData = (date, callback) => {
 }
 
 const goNext = (today, lastDay = DATE_RANGE[1]) => {
-    const todayDate = new Date(today).getDate();
-    const lastDayDate = new Date(lastDay).getDate();
 
-    if (todayDate < lastDayDate) {
-        const nextDate = new Date();
-        nextDate.setDate(todayDate + 1);
+    if (moment(today).isBefore(lastDay)) {
+        const nextDate = moment(today).add(1, 'days').format('YYYY-MM-DD');
 
-        getData(nextDate, goNext);
+        getData(new Date(nextDate), goNext);
 
     } else {
         console.log('All Done!');
